@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { CountryList } from "../../components/country-list/country-list";
 
 @Component({
   selector: 'app-by-region',
-  imports: [],
+  imports: [CountryList],
   templateUrl: './by-region.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ByRegionPage { }
+export class ByRegionPage {}
