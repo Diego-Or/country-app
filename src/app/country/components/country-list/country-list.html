@@ -14,16 +14,21 @@
         </tr>
       </thead>
       <tbody>
-        <!-- row 1 -->
-        <tr>
-          <th>1</th>
-          <td>Cy Ganderton</td>
-          <td>Quality Control Specialist</td>
-          <td>Blue</td>
-          <td>Blue</td>
-          <td>Blue</td>
-          <td>Ver detalles ></td>
-        </tr>
+        @for (country of countries(); track country.cca2; let index = $index) {
+          <!-- row 1 -->
+          <tr>
+            <th>{{ index + 1}}</th>
+            <td>{{ country.flag }}</td>
+            <td><img class="w-10" [src]="country.flags.svg" [alt]="country.name.common"></td>
+            <td>{{ country.name.common }}</td>
+            <td>{{ country.capital }}</td>
+            <td>{{ country.population }}</td>
+            <td>
+              <a class="link-primary" href="#">Ver detalles ></a>
+            </td>
+          </tr>
+        }
+
       </tbody>
     </table>
   </div>
