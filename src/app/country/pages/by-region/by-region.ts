@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CountryList } from "../../components/country-list/country-list";
-import { RESTCountry } from '../../interfaces/rest-countries.interface';
+import { Country } from '../../interfaces/country.inteface';
 
 @Component({
   selector: 'app-by-region',
@@ -8,5 +8,5 @@ import { RESTCountry } from '../../interfaces/rest-countries.interface';
   templateUrl: './by-region.html',
 })
 export class ByRegionPage {
-  countries = signal<RESTCountry[]>([]);
+  countries = signal<Country[]>([]);
 }

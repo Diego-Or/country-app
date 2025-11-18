@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { InputSearch } from "../../components/input-search/input-search";
 import { CountryList } from "../../components/country-list/country-list";
 import { RESTCountry } from '../../interfaces/rest-countries.interface';
+import { Country } from '../../interfaces/country.inteface';
 
 @Component({
   selector: 'app-by-country',
@@ -10,7 +11,7 @@ import { RESTCountry } from '../../interfaces/rest-countries.interface';
 })
 export class ByCountryPage {
 
-  countries = signal<RESTCountry[]>([]);
+  countries = signal<Country[]>([]);
 
   onSearch(inputBuscar: string){
     console.log(inputBuscar);
