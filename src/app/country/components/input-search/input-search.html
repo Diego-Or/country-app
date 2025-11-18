@@ -4,8 +4,8 @@
     class="input input-bordered mr-2 w-56"
     [placeholder]="placeholder()"
     #txtSearch
-    (keyup.enter)="inputValue.emit(txtSearch.value)"
+    (keyup.enter)="inputBuscar.emit(txtSearch.value)"
   >
 
-  <button class="btn btn-primary" (click)="inputValue.emit(txtSearch.value)">Buscar</button>
+  <button class="btn btn-primary" (click)="inputBuscar.emit(txtSearch.value)">Buscar</button>
 </section>

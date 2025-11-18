@@ -7,6 +7,6 @@ import { Component, input, output } from '@angular/core';
 })
 export class InputSearch {
   placeholder = input<string>('Buscar');
-  inputValue = output<string>();
+  inputBuscar = output<string>();
 
 }

@@ -9,8 +9,8 @@ import { CountryList } from "../../components/country-list/country-list";
 })
 export class ByCountryPage {
 
-  onSearch(inputValue: string){
-    console.log(inputValue);
+  onSearch(inputBuscar: string){
+    console.log(inputBuscar);
   }
 
 }
