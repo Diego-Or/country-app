@@ -25,11 +25,16 @@ export class ByCapitalPage {
     this.isError.set(null);
 
     this.CountryService.searchByCapital(inputBuscar)
-      .subscribe((countries) => {
-        this.isLoding.set(false)
-        this.countries.set(countries)
-
-        // console.log(c)
+      .subscribe({
+        next: (countries) => {
+          this.countries.set(countries);
+          this.isLoding.set(false);
+        },
+        error: (err) => {
+          this.isLoding.set(false);
+          this.countries.set([]);
+          this.isError.set(err);
+        }
       });
   }
 
