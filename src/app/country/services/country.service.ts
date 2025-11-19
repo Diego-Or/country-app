@@ -20,7 +20,6 @@ export class CountryService {
       .pipe(
         map(resp => CountryMapper.mapRestCountriesToCountryArray(resp)),
         catchError(error => {
-          console.log('Errorasdfasd');
           return throwError(()=> new Error(`No se encontró una capital con por ${query}`));
         })
       );
