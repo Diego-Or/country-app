@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { RESTCountry } from '../interfaces/rest-countries.interface';
-import { map, Observable, catchError, throwError } from 'rxjs';
+import { map, Observable, catchError, throwError} from 'rxjs';
 import type { Country } from '../interfaces/country.inteface';
 import { CountryMapper } from '../../mappers/country.mapper';
 

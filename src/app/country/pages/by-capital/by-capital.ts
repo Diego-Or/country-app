@@ -1,8 +1,11 @@
 import { Component, inject, resource, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { firstValueFrom, of } from 'rxjs';
+
 import { InputSearch } from "../../components/input-search/input-search";
 import { CountryList } from "../../components/country-list/country-list";
 import { CountryService } from '../../services/country.service';
-import { firstValueFrom } from 'rxjs';
+
 
 @Component({
   selector: 'app-by-capital-page',
@@ -14,17 +17,30 @@ export class ByCapitalPage {
   private CountryService = inject(CountryService);
   query = signal('');
 
-  countryResource = resource({
-    params: () => ({ query: this.query() }),
-    loader: async( { params } ) => {
-
-      if(!params.query) return [];
-
-      return await firstValueFrom(
-        this.CountryService.searchByCapital(params.query)
-      )
+  capitalResource = rxResource(
+    {
+      params: () => ( {query: this.query()} ),
+      stream: ({params}) => {
+        if(!params.query) return of([]);
+        return  this.CountryService.searchByCapital(params.query)
+      }
     }
-  })
+  )
+
+  // CON PROMESAS
+  // countryResource = resource({
+  //   params: () => ({ query: this.query() }),
+  //   loader: async( { params } ) => {
+
+  //     if(!params.query) return [];
+
+  //     return await firstValueFrom(
+  //       this.CountryService.searchByCapital(params.query)
+  //     )
+  //   }
+  // })
+
+
 
   // isLoding = signal(false);
   // isError = signal<string | null>(null);

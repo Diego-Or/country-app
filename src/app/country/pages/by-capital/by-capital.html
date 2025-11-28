@@ -1,9 +1,9 @@
 <input-search (inputBuscar)="query.set($event)" placeholder="Buscar por capital"></input-search>
 
-@if (countryResource.error()) {
-  <h3 class="mt-5">{{ countryResource.error() }}</h3>
-} @if (countryResource.hasValue()){
-  <country-list [countries]="countryResource.value()!"></country-list>
+@if (capitalResource.error()) {
+  <h3 class="mt-5">{{ capitalResource.error() }}</h3>
+} @if (capitalResource.hasValue()){
+  <country-list [countries]="capitalResource.value()!"></country-list>
 }
 
 
