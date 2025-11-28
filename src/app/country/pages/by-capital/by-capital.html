@@ -1,10 +1,11 @@
 <input-search (inputBuscar)="query.set($event)" placeholder="Buscar por capital"></input-search>
 
-@if (capitalResource.error()) {
-  <h3 class="mt-5">{{ capitalResource.error() }}</h3>
-} @if (capitalResource.hasValue()){
-  <country-list [countries]="capitalResource.value()!"></country-list>
-}
+<country-list
+  [countries]="capitalResource.value() ?? []"
+  [errorMessage]="capitalResource.error()"
+  [isEmpty]="capitalResource.value()?.length===0"
+  [isLoading]="capitalResource.isLoading()"
+/>
 
 
 
