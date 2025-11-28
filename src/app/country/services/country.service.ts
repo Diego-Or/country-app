@@ -20,8 +20,20 @@ export class CountryService {
       .pipe(
         map(resp => CountryMapper.mapRestCountriesToCountryArray(resp)),
         catchError(error => {
-          return throwError(()=> new Error(`No se encontró una capital con por ${query}`));
+          return throwError(()=> new Error(`No se encontró una capital con "${query}"`));
         })
       );
   }
+
+  searchByCountry(query: string): Observable<Country[]>{
+    query = query.toLocaleLowerCase();
+    return this.http.get<RESTCountry[]>(`${API_URL}/name/${ query }`)
+      .pipe(
+        map(resp => CountryMapper.mapRestCountriesToCountryArray(resp)),
+        catchError(error => {
+          return throwError(()=> new Error(`No se encontró un país con "${query}"`));
+        })
+      );
+  }
+
 }
