@@ -6,6 +6,12 @@ export interface Country {
   name: string;
   capital: string;
   region: string;
+  subRegion: string;
   population: number;
+  map: string;
+}
 
+export interface Currency {
+  symbol: string;
+  name:   string;
 }

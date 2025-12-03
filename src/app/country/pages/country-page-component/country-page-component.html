@@ -8,7 +8,5 @@
 }
 
 @if ( countryResource.hasValue() ) {
-  <h1>{{ countryCode }}</h1>
-  <h3>Nombre: {{countryResource.value()!.name}}</h3>
-  <country-info/>
+  <country-info [country]="countryResource.value()"/>
 }
