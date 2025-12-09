@@ -5,6 +5,7 @@
     [placeholder]="placeholder()"
     #txtSearch
     (keyup.enter)="inputBuscar.emit(txtSearch.value)"
+    (keyup)="inputValue.set(txtSearch.value)"
   >
 
   <button class="btn btn-primary" (click)="inputBuscar.emit(txtSearch.value)">Buscar</button>

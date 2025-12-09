@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { RESTCountry } from '../interfaces/rest-countries.interface';
-import { map, Observable, catchError, throwError, delay} from 'rxjs';
+import { map, Observable, catchError, throwError, delay, of, tap} from 'rxjs';
 import type { Country } from '../interfaces/country.inteface';
 import { CountryMapper } from '../../mappers/country.mapper';
 
@@ -14,22 +14,41 @@ export class CountryService {
 
   private http = inject(HttpClient);
 
+  private queryCacheCapital = new Map<string, Country[]>();
+  private queryCacheCountry = new Map<string, Country[]>();
+
   searchByCapital(query: string): Observable<Country[]>{
     query = query.toLocaleLowerCase();
+
+    if (this.queryCacheCapital.has(query)){
+      console.log('Llegando por capital');
+      return of(this.queryCacheCapital.get(query) ?? []);
+    }
+
+    console.log('Nueva busqueda');
     return this.http.get<RESTCountry[]>(`${API_URL}/capital/${ query }`)
       .pipe(
         map(resp => CountryMapper.mapRestCountriesToCountryArray(resp)),
+        tap( countries => this.queryCacheCapital.set(query, countries)),
         catchError(error => {
           return throwError(()=> new Error(`No se encontró una capital con "${query}"`));
         })
-      );
+    );
   }
 
   searchByCountry(query: string): Observable<Country[]>{
     query = query.toLocaleLowerCase();
+
+    if (this.queryCacheCountry.has(query)){
+      console.log('Llegando por country');
+      return of(this.queryCacheCountry.get(query) ?? []);
+    }
+
+    console.log('Nueva busqueda');
     return this.http.get<RESTCountry[]>(`${API_URL}/name/${ query }`)
       .pipe(
         map(resp => CountryMapper.mapRestCountriesToCountryArray(resp)),
+        tap( countries => this.queryCacheCountry.set(query, countries)),
         // delay(2000),
         catchError(error => {
           return throwError(()=> new Error(`No se encontró un país con "${query}"`));
