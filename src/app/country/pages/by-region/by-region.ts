@@ -1,6 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CountryList } from "../../components/country-list/country-list";
-import { Country } from '../../interfaces/country.inteface';
+import { CountryService } from '../../services/country.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
+import { Region } from '../../interfaces/region.interface';
 
 @Component({
   selector: 'app-by-region',
@@ -8,5 +11,26 @@ import { Country } from '../../interfaces/country.inteface';
   templateUrl: './by-region.html',
 })
 export class ByRegionPage {
-  countries = signal<Country[]>([]);
+
+  public regions: Region[] = [
+    'Africa',
+    'Americas',
+    'Asia',
+    'Europe',
+    'Oceania',
+    'Antarctic',
+  ];
+
+  selectedRegion = signal<Region|null>(null);
+
+  private CountryService = inject(CountryService);
+  RegionResource = rxResource(
+    {
+      params: () => ( {region: this.selectedRegion()} ),
+      stream: ({params}) => {
+        if(!params.region) return of([]);
+        return  this.CountryService.searchByRegion(params.region)
+      }
+
+    });
 }
