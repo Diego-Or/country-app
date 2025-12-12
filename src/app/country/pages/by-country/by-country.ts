@@ -1,9 +1,12 @@
-import { Component, inject, resource, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject, linkedSignal, resource, signal } from '@angular/core';
+
+import { rxResource } from '@angular/core/rxjs-interop';
+import { firstValueFrom, of } from 'rxjs';
+
 import { InputSearch } from "../../components/input-search/input-search";
 import { CountryList } from "../../components/country-list/country-list";
 import { CountryService } from '../../services/country.service';
-import { firstValueFrom, of } from 'rxjs';
-import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-by-country',
@@ -13,13 +16,23 @@ import { rxResource } from '@angular/core/rxjs-interop';
 export class ByCountryPage {
 
   private CountryService = inject(CountryService);
-  query = signal('');
+
+  ActivatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  queryParam = this.ActivatedRoute.snapshot.queryParamMap.get('query') ?? '';
+
+  query = linkedSignal(() => this.queryParam);
 
   countryResource = rxResource(
     {
       params: () => ( {query: this.query()} ),
       stream: ({params}) => {
         if(!params.query) return of([]);
+        this.router.navigate(['/country/by-country'],{
+          queryParams: {
+            query: params.query,
+          }
+        })
         return  this.CountryService.searchByCountry(params.query)
       }
     }
