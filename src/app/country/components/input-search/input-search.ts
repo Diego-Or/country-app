@@ -1,4 +1,4 @@
-import { Component, effect, input, output, signal } from '@angular/core';
+import { Component, effect, input, linkedSignal, output, signal } from '@angular/core';
 
 @Component({
   selector: 'input-search',
@@ -8,8 +8,9 @@ import { Component, effect, input, output, signal } from '@angular/core';
 export class InputSearch {
   placeholder = input<string>('Buscar');
   inputBuscar = output<string>();
+  initialValue = input<string>();
 
-  inputValue = signal<string>('');
+  inputValue = linkedSignal<string>(() => this.initialValue() ?? '');
 
   debounceEffect = effect((onCleanup)=>{
     const value = this.inputValue();
