@@ -5,7 +5,11 @@
 <section class="row mt-2">
   <div class="flex gap-2">
       @for(region of regions; track region){
-        <button class="btn btn-soft btn-primary w-[100px]" (click)="selectedRegion.set(region)" [class.btn-active]="selectedRegion() === region">
+        <button
+          class="btn btn-soft btn-primary w-[100px]"
+          (click)="selectedRegion.set(region)"
+          [class.btn-active]="selectedRegion() === region"
+        >
           {{ region }}
         </button>
       }
